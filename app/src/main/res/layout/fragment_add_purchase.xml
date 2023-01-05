@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="addPurchaseViewModel"
+            type="com.asmirestoran.pesomakanan.viewmodel.AddPurchaseViewModel" />
+
+        <import type="com.asmirestoran.pesomakanan.FloatConvertors" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="error"
+            type="String" />
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="50dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/logo" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:background="@color/white"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/large_margin"
+                    android:paddingTop="50dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/TextFieldStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/vendor_name">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@={addPurchaseViewModel.purchaseLiveData.vendorName}"
+                            android:textSize="@dimen/sp_14" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/TextFieldStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/amount">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_amount"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="phone"
+                            android:text="@={addPurchaseViewModel.purchaseLiveData.amount}"
+                            android:textSize="@dimen/sp_14" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/TextFieldStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/tax_percentage"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_tax_percentage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="phone"
+                            android:text="@={addPurchaseViewModel.purchaseLiveData.taxPercentage}"
+                            android:textSize="@dimen/sp_14" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/TextFieldStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/tax_amount">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_tax_amount"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:focusable="false"
+                            android:text="@={addPurchaseViewModel.purchaseLiveData.taxAmount}"
+                            android:textSize="@dimen/sp_14" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/TextFieldStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/total_amount">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/tv_total_amount"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:focusable="false"
+                            android:text="@={addPurchaseViewModel.purchaseLiveData.totalAmount}"
+                            android:textSize="@dimen/sp_14" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/TextFieldStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginEnd="@dimen/medium_margin"
+                            android:layout_toStartOf="@+id/iv_order_date_pick"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/order_date">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/et_order_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:focusable="false"
+                                android:inputType="phone"
+                                android:text="@={addPurchaseViewModel.purchaseLiveData.orderDate}"
+                                android:textSize="@dimen/sp_14" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/iv_order_date_pick"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/ic_calendar" />
+
+                    </RelativeLayout>
+
+
+                    <RadioGroup
+                        android:id="@+id/rb_payment_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginTop="@dimen/medium_margin">
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/rb_payment_type_net"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/green_dark"
+                            android:text="@string/net_payment" />
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/rb_payment_type_custom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/green_dark"
+                            android:text="@string/custom_payment" />
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/rb_payment_type_emi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/green_dark"
+                            android:text="@string/emi" />
+
+                    </RadioGroup>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/ll_emi_payment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/TextFieldStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/emi_amount">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/et_emi_amount"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:focusable="false"
+                                android:inputType="phone"
+                                android:text="@={addPurchaseViewModel.purchaseLiveData.emiPayment.emiAmount}"
+                                android:textSize="@dimen/sp_14" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/TextFieldStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/emi_duration">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/et_emi_duration"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="phone"
+                                android:text="@={addPurchaseViewModel.purchaseLiveData.emiPayment.emiDuration}"
+                                android:textSize="@dimen/sp_14" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="@dimen/medium_margin"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/TextFieldStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginEnd="@dimen/medium_margin"
+                                android:layout_toStartOf="@+id/iv_emi_start_pick"
+                                android:background="@android:color/transparent"
+                                android:hint="@string/emi_start_date">
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:id="@+id/et_emi_start_date"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:inputType="phone"
+                                    android:text="@={addPurchaseViewModel.purchaseLiveData.emiPayment.startDate}"
+                                    android:textSize="@dimen/sp_14" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/iv_emi_start_pick"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:src="@drawable/ic_calendar" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="@dimen/medium_margin"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/TextFieldStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginEnd="@dimen/medium_margin"
+                                android:layout_toStartOf="@id/iv_emi_end_pick"
+                                android:background="@android:color/transparent"
+                                android:hint="@string/emi_end_date">
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:id="@+id/et_emi_end_date"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:inputType="phone"
+                                    android:text="@={addPurchaseViewModel.purchaseLiveData.emiPayment.endDate}"
+                                    android:textSize="@dimen/sp_14" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/iv_emi_end_pick"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:src="@drawable/ic_calendar" />
+
+                        </RelativeLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/ll_final_payment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/TextFieldStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/paid_amount">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/tv_paid_amount"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:focusable="false"
+                                android:inputType="phone"
+                                android:text="@={addPurchaseViewModel.purchaseLiveData.paidAmount}"
+                                android:textSize="@dimen/sp_14" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/til_balance_amount"
+                            style="@style/TextFieldStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/balance_amount">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/et_balance_amount"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:focusable="false"
+                                android:text="@={addPurchaseViewModel.purchaseLiveData.balanceAmount}"
+                                android:textSize="@dimen/sp_14" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_pending_payment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/til_pending_payment_date"
+                            style="@style/TextFieldStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginEnd="@dimen/medium_margin"
+                            android:layout_toStartOf="@+id/iv_pending_date_pick"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/pending_payment_date">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/et_pending_payment_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="phone"
+                                android:text="@={addPurchaseViewModel.purchaseLiveData.customPayment.pendingPaymentDate}"
+                                android:textSize="@dimen/sp_14" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/iv_pending_date_pick"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/ic_calendar" />
+
+                    </RelativeLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Error"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:text="@{error}"
+                        android:visibility="@{error.length()>0?View.VISIBLE:View.GONE}" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_add"
+                            style="@style/ButtonNormal"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/medium_margin"
+                            android:layout_marginEnd="@dimen/text_padding"
+                            android:layout_marginBottom="@dimen/btn_height"
+                            android:layout_weight="1"
+                            android:text="@string/add_item" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_reset"
+                            style="@style/ButtonNormal"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/text_padding"
+                            android:layout_marginTop="@dimen/medium_margin"
+                            android:layout_marginBottom="@dimen/btn_height"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/orange"
+                            android:text="@string/reset" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </ScrollView>
+
+        <include
+            android:id="@+id/pb"
+            layout="@layout/progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+
+</layout>

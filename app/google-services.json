@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "167387953323",
+    "project_id": "pesomakanan",
+    "storage_bucket": "pesomakanan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:167387953323:android:221bbc68e96a99b37e9fee",
+        "android_client_info": {
+          "package_name": "com.asmirestoran.pesomakanan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "167387953323-idt7m7css03a4uknhcu71mjemdevqbpi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_5hMX9DwTZ0SwtI4OUQQy7qwt04SXTjw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "167387953323-idt7m7css03a4uknhcu71mjemdevqbpi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
