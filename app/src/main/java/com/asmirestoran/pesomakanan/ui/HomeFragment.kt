@@ -60,15 +60,15 @@ class HomeFragment : BaseFragment() {
     private fun createItemListAdapter(categories: List<Category>): ItemPagerAdapter {
         return ItemPagerAdapter(requireActivity(), categories, object : OnFoodItemSelectListener {
             override fun onFoodSelected(selectedFoodItem: Item) {
+                Utils.showToast(requireContext(), "Added ${selectedFoodItem.name}")
                 addOrUpdateOrder(selectedFoodItem)
             }
-        })
+        }, order)
     }
 
     private fun addOrUpdateOrder(selectedFoodItem: Item) {
         order?.cartItems?.let {
-            if (cartItemsContains(it, selectedFoodItem)) {
-            } else {
+            if (cartItemsContains(it, selectedFoodItem)) {} else {
                 it.add((CartItem().apply {
                     item = selectedFoodItem
                     quantity = 1
@@ -76,11 +76,13 @@ class HomeFragment : BaseFragment() {
                 }))
             }
         } ?: kotlin.run {
-            order?.cartItems = mutableListOf((CartItem().apply {
-                item = selectedFoodItem
-                quantity = 1
-                subAmount = quantity * selectedFoodItem.price
-            }))
+            order?.cartItems = ArrayList<CartItem>().apply {
+                add((CartItem().apply {
+                    item = selectedFoodItem
+                    quantity = 1
+                    subAmount = quantity * selectedFoodItem.price
+                }))
+            }
         }
 
         order?.let { _order ->
@@ -89,7 +91,6 @@ class HomeFragment : BaseFragment() {
                 _order.totalAmount += it.subAmount
             }
         }
-
         orderViewModel.order.value = order
         Log.d("Surendar", order.toString())
     }
@@ -120,7 +121,6 @@ class HomeFragment : BaseFragment() {
                         TabLayoutMediator(
                             binding.tabs, binding.viewPager
                         ) { tab, position -> tab.text = categories[position].name }.attach()
-
                     }
                 }
                 Status.ERROR -> {

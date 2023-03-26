@@ -9,15 +9,16 @@ import com.asmirestoran.pesomakanan.repository.OrderRepository
 class OrderViewModel : ViewModel() {
     val order = MutableLiveData<Order>()
     val error = MutableLiveData<String>()
-    val createOrderResult = OrderRepository.addOrderResult
-    val orderTypes = OrderRepository.getOrderTypes()
+    private val orderRepository = OrderRepository()
+    val createOrderResult = orderRepository.addOrderResult
+    val orderTypes = orderRepository.getOrderTypes()
 
     init {
         order.value = Order()
     }
 
     fun addOrder(order: Order) {
-        OrderRepository.addOrder(order)
+        orderRepository.addOrder(order)
     }
 
     fun createId() {
@@ -34,5 +35,18 @@ class OrderViewModel : ViewModel() {
             }
             order.value = _order
         }
+    }
+
+    fun getTables(): List<String> {
+        val list = mutableListOf<String>()
+        list.add("Select a table")
+        for (i in 1..15) {
+            list.add("Table $i")
+        }
+        return list
+    }
+
+    fun setTable(position: Int) {
+        order.value?.tableNo = position
     }
 }

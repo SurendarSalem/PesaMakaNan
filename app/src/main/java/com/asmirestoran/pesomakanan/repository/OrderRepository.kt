@@ -9,7 +9,7 @@ import com.asmirestoran.pesomakanan.model.Order
 import com.asmirestoran.pesomakanan.model.OrderType
 import com.asmirestoran.pesomakanan.model.Purchase
 
-object OrderRepository {
+class OrderRepository {
 
     // private var orders: MutableList<Order> = mutableListOf()
     val addOrderResult: MutableLiveData<Resource<Order>> =

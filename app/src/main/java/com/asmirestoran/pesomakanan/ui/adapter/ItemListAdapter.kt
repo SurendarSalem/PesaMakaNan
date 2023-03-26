@@ -5,11 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.asmirestoran.pesomakanan.databinding.LayoutFoodItemBinding
 import com.asmirestoran.pesomakanan.model.Item
+import com.asmirestoran.pesomakanan.model.Order
 import com.asmirestoran.pesomakanan.ui.HomeFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
-class ItemListAdapter(val onFoodItemSelectListener: HomeFragment.OnFoodItemSelectListener?) :
+class ItemListAdapter(
+    val onFoodItemSelectListener: HomeFragment.OnFoodItemSelectListener?,
+    order: Order?
+) :
     RecyclerView.Adapter<ItemListAdapter.ItemHolder>() {
 
     var items: List<Item> = mutableListOf()

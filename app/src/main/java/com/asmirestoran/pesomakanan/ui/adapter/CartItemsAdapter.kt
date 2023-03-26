@@ -10,7 +10,7 @@ import com.asmirestoran.pesomakanan.model.CartItem
 class CartItemsAdapter(val context: Context, val orderEditListener: OrderEditListener) :
     RecyclerView.Adapter<CartItemsAdapter.CartItemHolder>() {
 
-    var cartItems: List<CartItem> = mutableListOf()
+    var cartItems: ArrayList<CartItem> = ArrayList()
         get() = field
         set(value) {
             field = value
@@ -33,9 +33,14 @@ class CartItemsAdapter(val context: Context, val orderEditListener: OrderEditLis
 
     override fun getItemCount() = cartItems.size
 
-    fun updateData(cartItems: List<CartItem>) {
+    fun updateData(cartItems: ArrayList<CartItem>) {
         this.cartItems = cartItems
         notifyDataSetChanged()
+    }
+
+    fun removeItem(pos: Int) {
+        this.cartItems.removeAt(pos)
+        notifyItemRemoved(pos)
     }
 
     class CartItemHolder(val context: Context, val binding: LayoutCartItemBinding) :
@@ -52,6 +57,7 @@ class CartItemsAdapter(val context: Context, val orderEditListener: OrderEditLis
             binding.btnMinus.setOnClickListener {
                 if (cartItem.quantity <= 0) {
                     binding.tvItemQty.text = 0.toString()
+                    orderEditListener.onItemRemoved(bindingAdapterPosition)
                 } else {
                     binding.tvItemQty.text = (cartItem.quantity - 1).toString()
                     cartItem.item?.let {
@@ -65,5 +71,6 @@ class CartItemsAdapter(val context: Context, val orderEditListener: OrderEditLis
 
     interface OrderEditListener {
         fun onOrderEdited()
+        fun onItemRemoved(pos: Int)
     }
 }

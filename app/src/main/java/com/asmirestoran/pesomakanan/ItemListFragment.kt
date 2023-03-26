@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.asmirestoran.pesomakanan.databinding.LayoutItemListBinding
 import com.asmirestoran.pesomakanan.model.Category
+import com.asmirestoran.pesomakanan.model.Order
 import com.asmirestoran.pesomakanan.ui.Utils
 import com.asmirestoran.pesomakanan.ui.adapter.ItemListAdapter
 import com.asmirestoran.pesomakanan.ui.BaseFragment
@@ -23,12 +24,14 @@ class ItemListFragment : BaseFragment() {
     private val itemListViewModel: ItemListViewModel by viewModels()
     private lateinit var itemListAdapter: ItemListAdapter
     var category: Category? = null
+    var order: Order? = null
     var onFoodItemSelectListener: HomeFragment.OnFoodItemSelectListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             category = it.getParcelable("category")
+            order = it.getParcelable("order")
         }
     }
 
@@ -55,7 +58,7 @@ class ItemListFragment : BaseFragment() {
         binding.rvItems.layoutManager = GridLayoutManager(context, 3);
         val itemDecoration = ItemOffsetDecoration(requireContext(), R.dimen.item_offset);
         binding.rvItems.addItemDecoration(itemDecoration);
-        itemListAdapter = ItemListAdapter(onFoodItemSelectListener)
+        itemListAdapter = ItemListAdapter(onFoodItemSelectListener, order)
         binding.rvItems.adapter = itemListAdapter
     }
 

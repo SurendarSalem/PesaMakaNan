@@ -7,10 +7,11 @@ import kotlinx.android.parcel.Parcelize
 class Order() : Parcelable {
     var orderId: String = ""
     var orderName: String = ""
-    var cartItems: MutableList<CartItem>? = null
+    var cartItems: ArrayList<CartItem>? = null
     var taxAmount: Float = 0f
     var totalAmount: Float = 0f
     var orderType: OrderType? = null
+    var tableNo: Int = 0
 
     companion object {
         fun createId(): String {
@@ -26,6 +27,11 @@ class Order() : Parcelable {
             }
             if (order.orderType == null || order.orderType == OrderType.NONE) {
                 return "Please select order type"
+            }
+            if (order.orderType == OrderType.TABLE) {
+                if (order.tableNo == 0) {
+                    return "Please select Table Number"
+                }
             }
             return ""
         }

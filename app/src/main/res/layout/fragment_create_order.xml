@@ -76,6 +76,15 @@
                         android:background="@android:color/transparent"
                         tools:listitem="@layout/role_item" />
 
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/sp_table_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:background="@android:color/transparent"
+                        android:entries="@array/tables"
+                        tools:listitem="@layout/role_item" />
+
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/Label"
                         android:layout_width="match_parent"

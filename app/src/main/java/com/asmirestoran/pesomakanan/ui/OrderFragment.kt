@@ -6,16 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.asmirestoran.pesomakanan.R
 import com.asmirestoran.pesomakanan.Status
 import com.asmirestoran.pesomakanan.databinding.FragmentCreateOrderBinding
 import com.asmirestoran.pesomakanan.model.Order
+import com.asmirestoran.pesomakanan.model.OrderType
 import com.asmirestoran.pesomakanan.ui.adapter.CartItemsAdapter
 import com.asmirestoran.pesomakanan.ui.adapter.OrderTypeSpinnerAdapter
+import com.asmirestoran.pesomakanan.ui.adapter.TableAdapter
 import com.asmirestoran.pesomakanan.viewmodel.OrderViewModel
 
 
@@ -56,14 +58,15 @@ class OrderFragment : BaseFragment() {
     ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_create_order, container, false)
+        initViews()
+        observe()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.orderViewModel = orderViewModel
-        initViews()
-        observe()
+
     }
 
     private fun observe() {
@@ -85,7 +88,7 @@ class OrderFragment : BaseFragment() {
                 }
             }
         }
-        orderViewModel.order.observe(requireActivity()) { order ->
+        orderViewModel.order.observe(viewLifecycleOwner) { order ->
             order.cartItems?.let {
                 if (it.isNotEmpty()) {
                     cartItemsAdapter.updateData(it)
@@ -137,14 +140,15 @@ class OrderFragment : BaseFragment() {
         override fun onOrderEdited() {
             orderViewModel.refreshTheTotal()
         }
+
+        override fun onItemRemoved(pos: Int) {
+            cartItemsAdapter.removeItem(pos)
+        }
     }
 
     private fun setDataForSpinner() {
         val adapter = OrderTypeSpinnerAdapter(requireContext(), orderViewModel.orderTypes)
         binding.spOrderType.adapter = adapter
-        orderFromEdit?.let {
-            binding.spOrderType.setSelection(orderViewModel.orderTypes.indexOf(it.orderType))
-        }
         binding.spOrderType.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -154,9 +158,40 @@ class OrderFragment : BaseFragment() {
                     p3: Long
                 ) {
                     orderViewModel.order.value?.orderType = adapter.getItem(position)
+                    if (adapter.getItem(position) == OrderType.TABLE) {
+                        binding.spTableNumber.visibility = View.VISIBLE
+                    } else {
+                        binding.spTableNumber.visibility = View.GONE
+                    }
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {}
             }
+        val tableAdapter = TableAdapter(
+            requireContext(),
+            getTables()
+        )
+        binding.spTableNumber.adapter = tableAdapter
+        binding.spTableNumber.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    adapterView: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    p3: Long
+                ) {
+                    orderViewModel.setTable(position)
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {}
+            }
+        orderFromEdit?.let {
+            binding.spOrderType.setSelection(orderViewModel.orderTypes.indexOf(it.orderType))
+            binding.spTableNumber.setSelection(it.tableNo)
+        }
+    }
+
+    private fun getTables(): List<String> {
+        return orderViewModel.getTables()
     }
 }

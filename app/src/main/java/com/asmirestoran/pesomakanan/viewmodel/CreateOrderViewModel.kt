@@ -6,15 +6,21 @@ import com.asmirestoran.pesomakanan.model.Order
 import com.asmirestoran.pesomakanan.repository.CategoryRepository
 import com.asmirestoran.pesomakanan.repository.OrderRepository
 
-class OrderListViewModel : ViewModel() {
+class CreateOrderViewModel : ViewModel() {
+    val order = MutableLiveData<Order>()
+    val error = MutableLiveData<String>()
     private val orderRepository = OrderRepository()
-    val orderListResult = orderRepository.orderListResult
+    val createOrderResult = orderRepository.addOrderResult
 
     init {
-        getAllOrders()
+        order.value = Order()
     }
 
-    fun getAllOrders() {
-        orderRepository.getAllOrders()
+    fun addOrder(order: Order) {
+        orderRepository.addOrder(order)
+    }
+
+    fun createId() {
+        order.value?.orderId = Order.createId()
     }
 }
